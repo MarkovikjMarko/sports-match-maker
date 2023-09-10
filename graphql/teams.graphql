@@ -1,0 +1,19 @@
+extend type Query {
+    teams: [Team!]! @paginate
+    team(id: ID @eq): Team @find
+}
+
+extend type Mutation {
+    createTeam(user_ids: [ID!]!, sport_id: ID!): String!
+
+    addUserToTeam(team_id: ID!, user_id: ID!): String!
+
+    deleteTeam(id: ID! @whereKey): Team @delete
+}
+
+type Team {
+    id: ID!
+
+    users: [User]! @belongsToMany
+    sport: Sport! @belongsTo
+}

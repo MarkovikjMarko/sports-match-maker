@@ -1,0 +1,6 @@
+
+#import users.graphql
+#import sports.graphql
+#import teams.graphql
+#import games.graphql
+#import auth.graphql

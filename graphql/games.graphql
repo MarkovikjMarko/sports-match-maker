@@ -1,0 +1,40 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+extend type Query {
+    games: [Game!]! @paginate
+    game(id: ID @eq): Game @find
+}
+
+extend type Mutation {
+    createGame(
+        location: String!
+        date: Date!
+        time: String!
+        description: String!
+        isTeamGame: Boolean!
+        team_id: ID
+        user_id: ID
+        sport_id: ID!
+    ): String!
+
+    acceptGame(id: ID, team_id: ID, user_id: ID): String!
+
+    deleteGame(id: ID! @whereKey): Game @delete
+}
+
+type Game {
+    id: ID!
+    location: String!
+    time: String!
+    date: Date!
+    description: String!
+    isTeamGame: Boolean!
+    isPending: Boolean!
+
+    team1: Team @belongsTo
+    team2: Team @belongsTo
+    user1: User @belongsTo
+    user2: User @belongsTo
+    sport: Sport! @belongsTo
+}

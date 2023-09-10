@@ -1,0 +1,30 @@
+extend type Query {
+    users: [User!]! @paginate
+    user(id: ID @eq): User @find
+    findUser(email: String, name: String): [User]!
+        @auth
+        @guard(resolver: "\\App\\Graphql\\Mutation\\CreateTeam@handle")
+}
+
+extend type Mutation {
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String!
+    ): User! @create
+
+    updateUser(id: ID!, name: String, email: String, password: String): User!
+        @update
+
+    deleteUser(id: ID! @whereKey): User @delete
+}
+
+type User {
+    id: ID!
+
+    name: String!
+    email: String!
+    password: String!
+
+    teams: [Team]! @belongsToMany
+}

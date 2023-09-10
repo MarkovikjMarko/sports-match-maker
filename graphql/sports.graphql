@@ -1,0 +1,17 @@
+extend type Query {
+    sports: [Sport!]! @paginate
+    sport(id: ID @eq): Sport @find
+}
+
+extend type Mutation {
+    createSport(name: String!): Sport! @create
+
+    updateSport(id: ID!, name: String): Sport! @update
+
+    deleteSport(id: ID! @whereKey): Sport @delete
+}
+
+type Sport {
+    id: ID!
+    name: String!
+}
